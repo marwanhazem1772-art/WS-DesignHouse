@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Menu, MessageCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Menu, MessageCircle, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HeroScene from './HeroScene';
+import logo from '../assets/logo.png';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const navItems = ['About', 'Services', 'Projects', 'Contact'];
 
   return (
     <nav style={{ 
@@ -21,13 +24,16 @@ const Navbar: React.FC = () => {
       borderBottom: '1px solid var(--border)'
     }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-        <div style={{ fontSize: '20px', fontWeight: 600, letterSpacing: '0.25em', cursor: 'pointer', textTransform: 'uppercase' }}>
-          WS DESIGNHOUSE<span className="text-gold">.</span>
-        </div>
+        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none', color: 'inherit' }}>
+          <img src={logo} alt="WS Designhouse" style={{ height: '50px', width: 'auto' }} />
+          <div style={{ fontSize: '18px', fontWeight: 600, letterSpacing: '0.2em', cursor: 'pointer', textTransform: 'uppercase' }}>
+            WS DESIGNHOUSE<span className="text-gold">.</span>
+          </div>
+        </a>
         
         <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
-          <div className="nav-links" style={{ display: 'flex', gap: '30px' }}>
-            {['About', 'Services', 'Projects', 'Contact'].map((item) => (
+          <div className="nav-links">
+            {navItems.map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} style={{ 
                 textDecoration: 'none', 
                 color: 'var(--text)', 
@@ -45,15 +51,86 @@ const Navbar: React.FC = () => {
             ))}
           </div>
           <button 
-            onClick={() => setIsOpen(!isOpen)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)', display: 'none' }}
+            onClick={() => setIsOpen(true)}
+            className="menu-trigger"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)' }}
           >
             <Menu size={24} />
           </button>
         </div>
       </div>
 
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="mobile-drawer-overlay"
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)', zIndex: 1000 }}
+            />
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="mobile-drawer-menu"
+              style={{ 
+                position: 'fixed', 
+                top: 0, 
+                right: 0, 
+                bottom: 0, 
+                width: 'min(85vw, 400px)', 
+                background: '#ffffff', // Solid white
+                zIndex: 1001,
+                padding: 'clamp(40px, 8vw, 60px)',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: '-10px 0 50px rgba(0,0,0,0.2)'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '60px' }}>
+                <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text)' }}>
+                  <X size={32} />
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                {navItems.map((item, i) => (
+                  <motion.a 
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => setIsOpen(false)}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    style={{ 
+                      fontSize: 'clamp(24px, 5vw, 32px)', 
+                      fontFamily: 'Playfair Display', 
+                      textDecoration: 'none', 
+                      color: 'var(--text)',
+                      fontWeight: 500
+                    }}
+                  >
+                    {item}
+                  </motion.a>
+                ))}
+              </div>
+              <div style={{ marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: '40px' }}>
+                <p style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.5, marginBottom: '20px' }}>Contact Us</p>
+                <a href="tel:+201002583892" style={{ display: 'block', fontSize: '18px', textDecoration: 'none', color: 'var(--text)', marginBottom: '10px' }}>01002583892</a>
+                <a href="mailto:info@wsdesignhouse.com" style={{ display: 'block', fontSize: '14px', textDecoration: 'none', color: 'var(--text-muted)' }}>info@wsdesignhouse.com</a>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <style>{`
+        .nav-links { display: flex; gap: 30px; }
+        .menu-trigger { display: none; }
+
         .nav-item::after {
           content: '';
           position: absolute;
@@ -67,9 +144,15 @@ const Navbar: React.FC = () => {
         .nav-item:hover::after {
           width: 100%;
         }
+        
+        .mobile-drawer-overlay, .mobile-drawer-menu {
+          display: none !important;
+        }
+
         @media (max-width: 1024px) {
           .nav-links { display: none; }
-          button { display: block !important; }
+          .menu-trigger { display: block; }
+          .mobile-drawer-overlay, .mobile-drawer-menu { display: flex !important; }
         }
       `}</style>
     </nav>
@@ -78,26 +161,27 @@ const Navbar: React.FC = () => {
 
 const Hero: React.FC = () => {
   return (
-    <section id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', background: 'var(--bg)', borderTop: 'none' }}>
-      <div className="container" style={{ width: '100%', paddingTop: '100px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '60px', alignItems: 'center' }}>
+    <section id="hero" className="gold-gradient-bg" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', borderTop: 'none', overflow: 'hidden' }}>
+      <div className="container" style={{ width: '100%', paddingTop: '100px', paddingBottom: '40px' }}>
+        <div className="grid-2" style={{ alignItems: 'center' }}>
           
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
             style={{ maxWidth: '600px' }}
           >
             <span className="text-gold" style={{ letterSpacing: '0.4em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '30px' }}>
               Interior Architecture Specialists
             </span>
-            <h1 style={{ fontSize: 'clamp(40px, 6vw, 75px)', marginBottom: '40px', fontWeight: 400, color: '#111' }}>
+            <h1 style={{ fontSize: 'clamp(35px, 6vw, 75px)', marginBottom: '40px', fontWeight: 400, color: '#111', lineHeight: '1.1' }}>
               Designing Spaces <br/> That Define <span className="text-gold">Lifestyle</span>
             </h1>
-            <p style={{ fontSize: '18px', color: 'var(--text-muted)', marginBottom: '50px', maxWidth: '480px', lineHeight: '1.8' }}>
+            <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--text-muted)', marginBottom: '40px', maxWidth: '480px', lineHeight: '1.8' }}>
               From bespoke Kitchens to artisanal Bedrooms. We design in-house spaces in New Cairo that define your lifestyle with luxury and elegance.
             </p>
-            <div style={{ display: 'flex', gap: '20px' }}>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
               <a href="#projects" className="btn-primary">View Collection</a>
               <a href="#contact" className="btn-outline">Start Project</a>
             </div>
@@ -105,17 +189,16 @@ const Hero: React.FC = () => {
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            style={{ position: 'relative', height: '100%', display: 'flex', justifyContent: 'center' }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}
           >
-            {/* The HeroScene is now used as a floating frame here */}
-            <div style={{ width: '100%', minHeight: '600px', position: 'relative' }}>
+            <div style={{ width: '100%', minHeight: 'clamp(300px, 50vh, 600px)', position: 'relative' }}>
               <HeroScene />
             </div>
             
-            {/* Location floating text inside the hero grid to keep it balanced */}
-            <div style={{ position: 'absolute', bottom: '-40px', left: '0', fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.4 }}>
+            <div style={{ position: 'absolute', bottom: '-20px', left: '0', fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.4, whiteSpace: 'nowrap' }}>
               EST. 2026 • NEW CAIRO, EGYPT
             </div>
           </motion.div>
@@ -123,7 +206,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ position: 'absolute', bottom: '40px', right: '40px', display: 'flex', flexDirection: 'column', gap: '25px', zIndex: 10 }}>
+      <div className="social-sidebar" style={{ position: 'absolute', bottom: '40px', right: '40px', display: 'flex', flexDirection: 'column', gap: '25px', zIndex: 10 }}>
         <a href="https://wa.me/201002583892?text=Hello!%20I'm%20interested%20in%20a%20design%20consultation." target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text)', opacity: 0.6, transition: 'all 0.3s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--primary)')} onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text)')}>
           <MessageCircle size={20} />
         </a>
@@ -152,6 +235,13 @@ const Hero: React.FC = () => {
           </svg>
         </a>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .social-sidebar { display: none; }
+          #hero { min-height: auto; padding-top: 80px; }
+        }
+      `}</style>
     </section>
   );
 };

@@ -4,14 +4,15 @@ import { Palette, Box, Ruler, ClipboardCheck, Layout, MapPin, Mail } from 'lucid
 import kitchenImg from '../assets/kitchen.png';
 import bedroomImg from '../assets/bedroom.png';
 import entryImg from '../assets/entry.png';
+import logoWhite from '../assets/logo-white.png';
 
 const About: React.FC = () => {
   return (
-    <section id="about" style={{ padding: '160px 0', background: 'var(--bg)' }}>
+    <section id="about" style={{ padding: 'clamp(80px, 10vw, 160px) 0', background: 'var(--bg)' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px', alignItems: 'center' }}>
+        <div className="grid-2" style={{ alignItems: 'center', gap: '80px' }}>
           <div>
-            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '30px' }}>
+            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '20px' }}>
               The Vision
             </span>
             <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)', marginBottom: '40px' }}>
@@ -30,7 +31,7 @@ const About: React.FC = () => {
             </div>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div className="grid-2" style={{ gap: '20px' }}>
             {[
               { label: 'Founded', value: '2026', icon: <Box size={20} /> },
               { label: 'Projects', value: 'Bespoke', icon: <Palette size={20} /> },
@@ -41,7 +42,7 @@ const About: React.FC = () => {
                 key={i}
                 whileHover={{ y: -10 }}
                 style={{ 
-                  padding: '40px 30px', 
+                  padding: '30px 20px', 
                   background: 'var(--bg-soft)', 
                   border: '1px solid var(--border)',
                   borderRadius: '2px',
@@ -54,7 +55,7 @@ const About: React.FC = () => {
                 <div style={{ color: 'var(--primary)', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
                   {stat.icon}
                 </div>
-                <div style={{ fontSize: '24px', fontWeight: 600, marginBottom: '5px' }}>{stat.value}</div>
+                <div style={{ fontSize: '20px', fontWeight: 600, marginBottom: '5px' }}>{stat.value}</div>
                 <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.5 }}>{stat.label}</div>
               </motion.div>
             ))}
@@ -67,18 +68,18 @@ const About: React.FC = () => {
 
 const Founder: React.FC = () => {
   return (
-    <section id="founder" style={{ padding: '160px 0', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
+    <section id="founder" style={{ padding: 'clamp(80px, 10vw, 160px) 0', background: 'var(--bg-soft)', borderTop: '1px solid var(--border)' }}>
       <div className="container">
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '30px' }}>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 8vw, 80px)' }}>
+            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '20px' }}>
               Leadership & Vision
             </span>
             <h2 style={{ fontSize: 'clamp(35px, 5vw, 60px)', marginBottom: '10px' }}>Dr. Wessam Abdellatif</h2>
             <div style={{ color: 'var(--primary)', fontSize: '24px', fontWeight: 300 }}>⸻</div>
           </div>
 
-          <div style={{ columns: '2 350px', columnGap: '80px', orphans: 3, widows: 3 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '40px 80px' }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -134,22 +135,22 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section id="services" style={{ padding: '160px 0', background: 'var(--bg-soft)' }}>
+    <section id="services" style={{ padding: 'clamp(80px, 10vw, 160px) 0', background: 'var(--bg-soft)' }}>
       <div className="container">
-        <div style={{ textAlign: 'center', marginBottom: '100px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(60px, 8vw, 100px)' }}>
           <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '20px' }}>
             Our Expertise
           </span>
           <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)' }}>Tailored Design Services</h2>
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
+        <div className="grid-3">
           {services.map((service, i) => (
             <motion.div 
               key={i}
               whileHover={{ scale: 1.02 }}
               style={{ 
-                padding: '60px 40px', 
+                padding: 'clamp(40px, 5vw, 60px) 40px', 
                 background: '#fff', 
                 border: '1px solid var(--border)',
                 borderRadius: '4px',
@@ -193,21 +194,21 @@ const Projects: React.FC = () => {
   ];
 
   return (
-    <section id="projects" style={{ padding: '160px 0', background: 'var(--bg)' }}>
+    <section id="projects" style={{ padding: 'clamp(80px, 10vw, 160px) 0', background: 'var(--bg)' }}>
       <div className="container">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '80px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'clamp(40px, 6vw, 80px)', flexWrap: 'wrap', gap: '20px' }}>
           <div>
-            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '20px' }}>
+            <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '10px' }}>
               Selected Works
             </span>
-            <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)' }}>Portolio Collection</h2>
+            <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)' }}>Portfolio Collection</h2>
           </div>
-          <p style={{ maxWidth: '400px', fontSize: '15px', color: 'var(--text-muted)', textAlign: 'right' }}>
+          <p style={{ maxWidth: '400px', fontSize: '15px', color: 'var(--text-muted)' }}>
             A curated selection of residential masterpieces in Egypt.
           </p>
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '15px' }}>
+        <div className="grid-3" style={{ gap: '15px' }}>
           {projects.map((p, i) => (
             <motion.div 
               key={i}
@@ -215,7 +216,7 @@ const Projects: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               viewport={{ once: true }}
-              style={{ position: 'relative', height: '600px', cursor: 'pointer', overflow: 'hidden', border: '1px solid var(--border)' }}
+              style={{ position: 'relative', height: 'min(90vw, 600px)', cursor: 'pointer', overflow: 'hidden', border: '1px solid var(--border)' }}
             >
               <img 
                 src={p.img} 
@@ -228,7 +229,7 @@ const Projects: React.FC = () => {
                   position: 'absolute', 
                   inset: 0, 
                   background: 'linear-gradient(to bottom, transparent 40%, rgba(197, 160, 89, 0.2) 70%, rgba(26, 26, 26, 0.9) 100%)',
-                  padding: '40px',
+                  padding: 'clamp(20px, 5vw, 40px)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
@@ -238,7 +239,7 @@ const Projects: React.FC = () => {
               >
                 <div style={{ transform: 'translateY(10px)', transition: 'transform 0.5s' }} className="project-text">
                   <span style={{ color: 'var(--primary)', letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: '10px', fontWeight: 600, marginBottom: '10px', display: 'block' }}>{p.cat}</span>
-                  <h3 style={{ color: '#fff', fontSize: '24px' }}>{p.title}</h3>
+                  <h3 style={{ color: '#fff', fontSize: 'clamp(20px, 3vw, 24px)' }}>{p.title}</h3>
                 </div>
               </div>
             </motion.div>
@@ -271,10 +272,10 @@ const Process: React.FC = () => {
           <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)' }}>Our Method</h2>
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px' }}>
+        <div className="grid-3" style={{ gap: 'clamp(40px, 8vw, 80px)' }}>
           {steps.map((s, i) => (
             <div key={i} style={{ position: 'relative' }}>
-              <div style={{ fontSize: '80px', fontWeight: 700, color: 'var(--primary)', opacity: 0.1, position: 'absolute', top: '-40px', left: '-20px', fontFamily: 'Playfair Display' }}>
+              <div style={{ fontSize: 'clamp(60px, 10vw, 80px)', fontWeight: 700, color: 'var(--primary)', opacity: 0.1, position: 'absolute', top: '-30px', left: '-10px', fontFamily: 'Playfair Display' }}>
                 {s.num}
               </div>
               <h3 style={{ fontSize: '24px', marginBottom: '20px', position: 'relative' }}>{s.title}</h3>
@@ -300,14 +301,12 @@ const Contact: React.FC = () => {
     setFormData(prev => ({ ...prev, [name.toLowerCase().replace(' ', '')]: value }));
   };
 
-  // Special handling for the select since its label is "Project Type"
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, projectType: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     const whatsappNumber = '201002583892';
     const text = `Hi WS Designhouse! 
     
@@ -323,14 +322,14 @@ I am inquiring about a *${formData.projectType}* project.
   };
 
   return (
-    <section id="contact" style={{ padding: '160px 0', background: '#fff' }}>
+    <section id="contact" style={{ padding: 'clamp(80px, 10vw, 160px) 0', background: '#fff' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '100px' }}>
+        <div className="grid-2" style={{ gap: 'clamp(60px, 8vw, 100px)' }}>
           <div>
             <span className="text-gold" style={{ letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '20px' }}>
               Connect
             </span>
-            <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)', marginBottom: '40px' }}>Start Your Journey</h2>
+            <h2 style={{ fontSize: 'clamp(35px, 4vw, 55px)', marginBottom: '30px' }}>Start Your Journey</h2>
             <p style={{ fontSize: '18px', color: 'var(--text-muted)', marginBottom: '60px', maxWidth: '450px' }}>
               Experience the art of artisanal living. Reach out to our design team in New Cairo for a private consultation.
             </p>
@@ -425,9 +424,9 @@ I am inquiring about a *${formData.projectType}* project.
             </div>
           </div>
           
-          <div style={{ padding: '60px', background: 'var(--bg-soft)', border: '1px solid var(--border)', borderRadius: '4px', boxShadow: 'var(--gold-glow)' }}>
+          <div style={{ padding: 'clamp(30px, 5vw, 60px)', background: 'var(--bg-soft)', border: '1px solid var(--border)', borderRadius: '4px', boxShadow: 'var(--gold-glow)' }}>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   <label style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 600 }}>Name</label>
                   <input 
@@ -485,21 +484,22 @@ I am inquiring about a *${formData.projectType}* project.
 
 const CTA: React.FC = () => {
   return (
-    <section style={{ padding: '100px 0', background: 'var(--primary)', color: '#fff' }}>
+    <section style={{ padding: '80px 0', background: 'var(--primary)', color: '#fff' }}>
       <div className="container">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '50px' }}>
-          <div>
-            <h2 style={{ fontSize: 'clamp(30px, 4vw, 45px)', marginBottom: '15px', color: '#fff' }}>Ready to Elevate Your Space?</h2>
+        <div className="grid-2" style={{ alignItems: 'center', gap: '40px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <img src={logoWhite} alt="WS Designhouse" style={{ height: '70px', width: 'auto', alignSelf: 'flex-start' }} />
+            <h2 style={{ color: '#fff' }}>Ready to Elevate Your Space?</h2>
             <p style={{ opacity: 0.9, fontSize: '18px' }}>Call us directly for a private consultation.</p>
           </div>
-          <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
-            <a href="tel:+201002583892" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '20px', fontWeight: 600 }}>
+          <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
+            <a href="tel:+201002583892" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '18px', fontWeight: 600 }}>
               <span style={{ fontSize: '24px' }}>📞</span> 01002583892
             </a>
-            <a href="tel:+201206221243" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '20px', fontWeight: 600 }}>
+            <a href="tel:+201206221243" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '18px', fontWeight: 600 }}>
               <span style={{ fontSize: '24px' }}>📞</span> 01206221243
             </a>
-            <a href="tel:+20225410567" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '20px', fontWeight: 600 }}>
+            <a href="tel:+20225410567" style={{ color: '#fff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '18px', fontWeight: 600 }}>
               <span style={{ fontSize: '24px' }}>☎️</span> 0225410567
             </a>
           </div>
